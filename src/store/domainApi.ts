@@ -25,7 +25,7 @@ export const domainApi = createApi({
     }),
     getDomain: builder.query<Domain, string>({
       query: (id) => `/${id}`,
-      providesTags: (result, error, id) => [{ type: "Domain", id }],
+      providesTags: (_result, _error, id) => [{ type: "Domain", id }],
     }),
     addDomain: builder.mutation<Domain, Partial<Domain>>({
       query: (body) => ({
@@ -47,7 +47,9 @@ export const domainApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Domain", id }],
+      invalidatesTags: (_result, _error, arg) => [
+        { type: "Domain", id: arg.id },
+      ],
     }),
     deleteDomain: builder.mutation<void, string>({
       query: (id) => ({
